@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Désactivé : le double-montage du StrictMode (dev) est incompatible avec le
+  // portail HTML de <Scroll html> de @react-three/drei (createRoot appelé 2x).
+  reactStrictMode: false,
 };
 
 export default nextConfig;

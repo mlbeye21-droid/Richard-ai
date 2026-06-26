@@ -1,6 +1,6 @@
 "use client";
 import { Canvas } from "@react-three/fiber";
-import { ScrollControls, Scroll, Environment } from "@react-three/drei";
+import { ScrollControls, Scroll, Environment, Lightformer } from "@react-three/drei";
 import { Richard3DModel } from "@/components/Richard3DModel";
 
 export default function Home() {
@@ -9,7 +9,14 @@ export default function Home() {
       <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
         <ambientLight intensity={0.6} />
         <directionalLight position={[10, 10, 10]} intensity={2} color="#ffffff" />
-        <Environment preset="city" />
+
+        {/* Environnement généré en interne (réflexions sur le métal, sans dépendance réseau). */}
+        <Environment resolution={256}>
+          <Lightformer intensity={3} color="#ffffff" position={[0, 5, -9]} scale={[10, 10, 1]} />
+          <Lightformer intensity={2} color="#10B981" position={[-6, 1, 2]} scale={[10, 3, 1]} />
+          <Lightformer intensity={1.5} color="#34d399" position={[6, -2, 2]} scale={[10, 3, 1]} />
+          <Lightformer intensity={1} color="#ffffff" position={[0, -6, 4]} scale={[12, 4, 1]} />
+        </Environment>
 
         <ScrollControls pages={10} damping={0.3}>
           <Richard3DModel />
