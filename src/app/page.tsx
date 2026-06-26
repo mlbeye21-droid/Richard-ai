@@ -1,25 +1,17 @@
 "use client";
+import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { ScrollControls, Scroll, Environment, Lightformer } from "@react-three/drei";
+import { ScrollControls, Scroll } from "@react-three/drei";
 import { Richard3DModel } from "@/components/Richard3DModel";
 
 export default function Home() {
   return (
     <main className="w-full h-screen bg-[#0D1B18] overflow-hidden font-sans selection:bg-[#10B981] selection:text-white">
       <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
-        <ambientLight intensity={0.6} />
-        <directionalLight position={[10, 10, 10]} intensity={2} color="#ffffff" />
-
-        {/* Environnement généré en interne (réflexions sur le métal, sans dépendance réseau). */}
-        <Environment resolution={256}>
-          <Lightformer intensity={3} color="#ffffff" position={[0, 5, -9]} scale={[10, 10, 1]} />
-          <Lightformer intensity={2} color="#10B981" position={[-6, 1, 2]} scale={[10, 3, 1]} />
-          <Lightformer intensity={1.5} color="#34d399" position={[6, -2, 2]} scale={[10, 3, 1]} />
-          <Lightformer intensity={1} color="#ffffff" position={[0, -6, 4]} scale={[12, 4, 1]} />
-        </Environment>
-
         <ScrollControls pages={10} damping={0.3}>
-          <Richard3DModel />
+          <Suspense fallback={null}>
+            <Richard3DModel />
+          </Suspense>
           <Scroll html style={{ width: "100%" }}>
 
             {/* 1. HERO */}
