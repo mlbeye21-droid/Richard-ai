@@ -36,25 +36,49 @@
       body { font-family: "Inter", ui-sans-serif, system-ui, sans-serif; }
       /* Couches de fond en CSS pur (ne dépendent pas de Tailwind, donc fiables
          même si un CDN tarde) — chemin absolu pour marcher sur /carte aussi. */
-      .bg-layer { position: fixed; inset: 0; }
-      /* Fond clair : l'image est affichée telle quelle (chemin absolu). */
+      .bg-layer { position: fixed; inset: 0; overflow: hidden; }
+      /* Fond clair : l'image est affichée telle quelle (chemin absolu).
+         Animation : lente dérive (effet Ken Burns) pour donner vie au fond. */
       .bg-pattern {
         z-index: -3;
         background: url("/carte/image.png") center / cover no-repeat;
         filter: saturate(1.05);
+        transform: scale(1.12);
+        animation: bgDrift 34s ease-in-out infinite alternate;
+        will-change: transform;
+      }
+      @keyframes bgDrift {
+        0%   { transform: scale(1.12) translate3d(-1.6%, -1.1%, 0); }
+        100% { transform: scale(1.12) translate3d(1.6%, 1.1%, 0); }
       }
       /* Voile blanc très léger pour adoucir le motif derrière le contenu. */
       .bg-overlay {
         z-index: -2;
         background: rgba(255, 255, 255, 0.14);
       }
+      /* Halo vert animé (couleur de marque) qui pulse doucement. */
+      .bg-glow {
+        z-index: -1;
+        background: radial-gradient(60% 50% at 50% 28%, rgba(69, 187, 30, 0.20), transparent 70%);
+        animation: glowPulse 9s ease-in-out infinite alternate;
+        will-change: opacity, transform;
+      }
+      @keyframes glowPulse {
+        0%   { opacity: 0.5; transform: translateY(-2%) scale(1); }
+        100% { opacity: 1;   transform: translateY(2%) scale(1.06); }
+      }
+      /* Accessibilité : pas d'animation si l'utilisateur préfère le mouvement réduit. */
+      @media (prefers-reduced-motion: reduce) {
+        .bg-pattern, .bg-glow { animation: none; transform: none; }
+      }
     </style>
   </head>
 
   <body class="min-h-[100svh] bg-[#06120d] text-white antialiased">
-    <!-- Couches de fond -->
+    <!-- Couches de fond (animées) -->
     <div class="bg-layer bg-pattern" aria-hidden="true"></div>
     <div class="bg-layer bg-overlay" aria-hidden="true"></div>
+    <div class="bg-layer bg-glow" aria-hidden="true"></div>
 
     <!-- Carte (sans panneau : contenu directement sur le fond clair) -->
     <main class="mx-auto flex min-h-[100svh] w-full max-w-sm flex-col items-center justify-center px-6 py-10 text-center">
