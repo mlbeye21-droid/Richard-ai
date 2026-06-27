@@ -75,8 +75,8 @@ export default function Home() {
 
             {/* 4. LE DOCUMENTAIRE */}
             <section className="h-screen flex flex-col items-end justify-center px-10 md:px-32 text-right w-full pointer-events-none">
-              <div className={`${panel} p-8 md:p-10 md:w-1/2`}>
-                <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">Le Documentaire.</h2>
+              <div className={`${panel} p-8 md:p-10 w-full max-w-2xl`}>
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 break-words leading-tight">Le Documentaire.</h2>
                 <p className="text-xl md:text-2xl text-gray-200 font-light leading-relaxed mb-6">La vérité brute, instantanément. Une architecture RAG garantissant une <strong className="text-[#10B981]">fidélité textuelle à 100%</strong>, source citée à chaque réponse.</p>
                 <p className="text-base md:text-lg text-gray-400 font-light">Recherche par article · thématique · navigation inter-textes — sur les Actes Uniformes, le SYSCOHADA révisé et le Code Général des Impôts.</p>
               </div>
@@ -84,8 +84,8 @@ export default function Home() {
 
             {/* 5. L'INTERPRÈTE */}
             <section className="h-screen flex flex-col items-start justify-center px-10 md:px-32 text-left w-full pointer-events-none">
-              <div className={`${panel} p-8 md:p-10 md:w-1/2`}>
-                <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">L'Interprète.</h2>
+              <div className={`${panel} p-8 md:p-10 w-full max-w-2xl`}>
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 break-words leading-tight">L'Interprète.</h2>
                 <p className="text-xl md:text-2xl text-gray-200 font-light leading-relaxed mb-6">Comprendre, pas seulement lire. Chaque texte est expliqué en quatre volets : ce qu'il dit, ce que cela signifie, dans quel contexte, et pourquoi c'est important.</p>
                 <p className="text-base md:text-lg text-gray-400 font-light">Mode apprentissage : quiz, exercices et fiches de révision pour les étudiants et les équipes en formation.</p>
               </div>
@@ -93,8 +93,8 @@ export default function Home() {
 
             {/* 6. L'EXPERT COMPTABLE */}
             <section className="h-screen flex flex-col items-end justify-center px-10 md:px-32 text-right w-full pointer-events-none">
-              <div className={`${panel} p-8 md:p-10 md:w-1/2`}>
-                <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">L'Expert Comptable.</h2>
+              <div className={`${panel} p-8 md:p-10 w-full max-w-2xl`}>
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 break-words leading-tight">L'Expert Comptable.</h2>
                 <p className="text-xl md:text-2xl text-gray-200 font-light leading-relaxed mb-6">Richard génère vos écritures conformes au <strong className="text-[#10B981]">SYSCOHADA révisé</strong>, détecte les anomalies et explique l'impact sur vos états financiers.</p>
                 <p className="text-base md:text-lg text-gray-400 font-light">Génération d'écritures · correction &amp; détection d'anomalies · cas pratiques complets, de la création d'entreprise à la clôture.</p>
               </div>
@@ -102,8 +102,8 @@ export default function Home() {
 
             {/* 7. WORKSPACE */}
             <section className="h-screen flex flex-col items-start justify-center px-10 md:px-32 text-left w-full pointer-events-none">
-              <div className={`${panel} p-8 md:p-10 md:w-1/2`}>
-                <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">Workspace.</h2>
+              <div className={`${panel} p-8 md:p-10 w-full max-w-2xl`}>
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 break-words leading-tight">Workspace.</h2>
                 <p className="text-xl md:text-2xl text-gray-200 font-light leading-relaxed mb-6">De la phrase au fichier Excel. Richard orchestre des flux complets : il analyse, génère les écritures, calcule les impacts et produit vos fichiers exploitables — en <strong className="text-[#10B981]">moins de 60 secondes</strong>.</p>
                 <p className="text-base md:text-lg text-gray-400 font-light">Langage naturel · export Excel automatique · mémoire de session · gestion fiscale adaptée à chaque pays OHADA.</p>
               </div>
