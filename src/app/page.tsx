@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { ScrollControls, Scroll, Environment, Lightformer } from "@react-three/drei";
 import { Richard3DModel } from "@/components/Richard3DModel";
@@ -9,6 +10,28 @@ import { SignupForm } from "@/components/SignupForm";
 const panel = "bg-black/50 backdrop-blur-md rounded-2xl shadow-2xl";
 
 export default function Home() {
+  // Le nombre de "pages" du scroll doit correspondre à la hauteur réelle du
+  // contenu : sur mobile, certaines sections dépassent 100vh, on mesure donc
+  // dynamiquement pour que rien ne soit rogné.
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [pages, setPages] = useState(10);
+
+  useEffect(() => {
+    const measure = () => {
+      const el = contentRef.current;
+      if (!el) return;
+      const vh = window.innerHeight || 1;
+      setPages(Math.max(1, el.scrollHeight / vh));
+    };
+    measure();
+    const t = setTimeout(measure, 400); // après chargement des polices / layout
+    window.addEventListener("resize", measure);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
+
   return (
     <main className="w-full h-screen bg-[#0D1B18] overflow-hidden font-sans selection:bg-[#10B981] selection:text-white">
       <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
@@ -23,12 +46,13 @@ export default function Home() {
           <Lightformer intensity={1} color="#ffffff" position={[0, -6, 4]} scale={[12, 4, 1]} />
         </Environment>
 
-        <ScrollControls pages={10} damping={0.3}>
+        <ScrollControls pages={pages} damping={0.3}>
           <Richard3DModel />
           <Scroll html style={{ width: "100%" }}>
+            <div ref={contentRef} className="w-full">
 
             {/* 1. HERO */}
-            <section className="h-screen flex flex-col items-center justify-center px-6 text-center">
+            <section className="min-h-screen py-20 flex flex-col items-center justify-center px-6 text-center">
               <div className={`${panel} px-8 md:px-14 py-10 md:py-12 max-w-3xl`}>
                 <span className="text-[#10B981] font-bold tracking-[0.3em] uppercase text-xs md:text-sm mb-6 block">Zone OHADA · 17 pays</span>
                 <h1 className="text-6xl md:text-8xl font-extrabold text-white tracking-tighter mb-4 drop-shadow-xl">RICHARD AI</h1>
@@ -38,7 +62,7 @@ export default function Home() {
             </section>
 
             {/* 2. PROBLÈME */}
-            <section className="h-screen flex flex-col items-start justify-center px-10 md:px-32 text-left w-full pointer-events-none">
+            <section className="min-h-screen py-20 flex flex-col items-start justify-center px-10 md:px-32 text-left w-full pointer-events-none">
               <div className={`${panel} p-8 md:p-10 max-w-3xl`}>
                 <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 break-words leading-tight">Le fardeau de la recherche.</h2>
                 <p className="text-xl md:text-2xl text-gray-200 font-light leading-relaxed mb-6">En moyenne, <strong className="text-[#10B981]">2,5 heures perdues</strong> chaque jour à fouiller dans les Actes Uniformes, le SYSCOHADA et les codes fiscaux.</p>
@@ -52,7 +76,7 @@ export default function Home() {
             </section>
 
             {/* 3. SOLUTION — 4 VERSIONS */}
-            <section className="h-screen flex flex-col items-center justify-center px-6 md:px-20 text-center w-full pointer-events-none">
+            <section className="min-h-screen py-20 flex flex-col items-center justify-center px-6 md:px-20 text-center w-full pointer-events-none">
               <div className={`${panel} px-8 py-6 mb-8`}>
                 <span className="text-[#10B981] font-bold tracking-widest uppercase text-sm mb-3 block">La solution</span>
                 <h2 className="text-4xl md:text-5xl font-bold text-white break-words leading-tight">Une intelligence qui grandit avec vous.</h2>
@@ -75,7 +99,7 @@ export default function Home() {
             </section>
 
             {/* 4. LE DOCUMENTAIRE */}
-            <section className="h-screen flex flex-col items-end justify-center px-10 md:px-32 text-right w-full pointer-events-none">
+            <section className="min-h-screen py-20 flex flex-col items-end justify-center px-10 md:px-32 text-right w-full pointer-events-none">
               <div className={`${panel} p-8 md:p-10 w-full max-w-2xl`}>
                 <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 break-words leading-tight">Le Documentaire.</h2>
                 <p className="text-xl md:text-2xl text-gray-200 font-light leading-relaxed mb-6">La vérité brute, instantanément. Une architecture RAG garantissant une <strong className="text-[#10B981]">fidélité textuelle à 100%</strong>, source citée à chaque réponse.</p>
@@ -84,7 +108,7 @@ export default function Home() {
             </section>
 
             {/* 5. L'INTERPRÈTE */}
-            <section className="h-screen flex flex-col items-start justify-center px-10 md:px-32 text-left w-full pointer-events-none">
+            <section className="min-h-screen py-20 flex flex-col items-start justify-center px-10 md:px-32 text-left w-full pointer-events-none">
               <div className={`${panel} p-8 md:p-10 w-full max-w-2xl`}>
                 <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 break-words leading-tight">L'Interprète.</h2>
                 <p className="text-xl md:text-2xl text-gray-200 font-light leading-relaxed mb-6">Comprendre, pas seulement lire. Chaque texte est expliqué en quatre volets : ce qu'il dit, ce que cela signifie, dans quel contexte, et pourquoi c'est important.</p>
@@ -93,7 +117,7 @@ export default function Home() {
             </section>
 
             {/* 6. L'EXPERT COMPTABLE */}
-            <section className="h-screen flex flex-col items-end justify-center px-10 md:px-32 text-right w-full pointer-events-none">
+            <section className="min-h-screen py-20 flex flex-col items-end justify-center px-10 md:px-32 text-right w-full pointer-events-none">
               <div className={`${panel} p-8 md:p-10 w-full max-w-2xl`}>
                 <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 break-words leading-tight">L'Expert Comptable.</h2>
                 <p className="text-xl md:text-2xl text-gray-200 font-light leading-relaxed mb-6">Richard génère vos écritures conformes au <strong className="text-[#10B981]">SYSCOHADA révisé</strong>, détecte les anomalies et explique l'impact sur vos états financiers.</p>
@@ -102,7 +126,7 @@ export default function Home() {
             </section>
 
             {/* 7. WORKSPACE */}
-            <section className="h-screen flex flex-col items-start justify-center px-10 md:px-32 text-left w-full pointer-events-none">
+            <section className="min-h-screen py-20 flex flex-col items-start justify-center px-10 md:px-32 text-left w-full pointer-events-none">
               <div className={`${panel} p-8 md:p-10 w-full max-w-2xl`}>
                 <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 break-words leading-tight">Workspace.</h2>
                 <p className="text-xl md:text-2xl text-gray-200 font-light leading-relaxed mb-6">De la phrase au fichier Excel. Richard orchestre des flux complets : il analyse, génère les écritures, calcule les impacts et produit vos fichiers exploitables — en <strong className="text-[#10B981]">moins de 60 secondes</strong>.</p>
@@ -111,7 +135,7 @@ export default function Home() {
             </section>
 
             {/* 8. MARCHÉ & MODÈLE */}
-            <section className="h-screen flex flex-col items-center justify-center px-6 md:px-20 text-center w-full pointer-events-none">
+            <section className="min-h-screen py-20 flex flex-col items-center justify-center px-6 md:px-20 text-center w-full pointer-events-none">
               <div className={`${panel} px-8 md:px-14 py-10 md:py-12 max-w-5xl`}>
                 <span className="text-[#10B981] font-bold tracking-widest uppercase text-sm mb-3 block">Le marché</span>
                 <h2 className="text-4xl md:text-5xl font-bold text-white mb-10 break-words leading-tight">300 millions de personnes.</h2>
@@ -133,7 +157,7 @@ export default function Home() {
             </section>
 
             {/* 9. ROADMAP */}
-            <section className="h-screen flex flex-col items-start justify-center px-10 md:px-32 text-left w-full pointer-events-none">
+            <section className="min-h-screen py-20 flex flex-col items-start justify-center px-10 md:px-32 text-left w-full pointer-events-none">
               <div className={`${panel} p-8 md:p-10 max-w-3xl`}>
                 <span className="text-[#10B981] font-bold tracking-widest uppercase text-sm mb-3 block">La trajectoire</span>
                 <h2 className="text-4xl md:text-5xl font-bold text-white mb-10 break-words leading-tight">Une roadmap claire.</h2>
@@ -154,7 +178,7 @@ export default function Home() {
             </section>
 
             {/* 10. CTA */}
-            <section className="h-screen flex flex-col items-center justify-center px-6 pointer-events-auto">
+            <section className="min-h-screen py-20 flex flex-col items-center justify-center px-6 pointer-events-auto">
               <div className="bg-black/50 backdrop-blur-md border border-white/10 p-10 md:p-14 rounded-3xl shadow-2xl w-full max-w-xl text-center">
                 <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 break-words leading-tight">Testez l'avenir.</h2>
                 <p className="text-gray-200 mb-8 font-light text-lg">Le MVP est <strong className="text-[#10B981]">en ligne</strong>. Rejoignez la communauté Richard AI.</p>
@@ -163,6 +187,7 @@ export default function Home() {
               </div>
             </section>
 
+            </div>
           </Scroll>
         </ScrollControls>
       </Canvas>
