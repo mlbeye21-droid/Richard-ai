@@ -20,6 +20,38 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Inscription des testeurs (e-mail de bienvenue + Google Sheet)
+
+Le formulaire de la landing envoie les coordonnées à la route `POST /api/register`, qui :
+
+1. envoie un **e-mail de bienvenue** au testeur depuis `richardlecomptable@gmail.com` (Gmail SMTP) ;
+2. envoie une **copie de notification** à l'équipe (`ADMIN_EMAIL`, par défaut `GMAIL_USER`) ;
+3. ajoute une ligne au **Google Sheet** de recensement (`date ISO`, `nom`, `email`).
+
+Copie `.env.example` vers `.env.local` et renseigne les variables :
+
+```bash
+cp .env.example .env.local
+```
+
+### 1. Gmail (envoi de l'e-mail)
+
+- Active la **validation en 2 étapes** sur le compte `richardlecomptable@gmail.com`.
+- Crée un **mot de passe d'application** : https://myaccount.google.com/apppasswords
+- Renseigne `GMAIL_USER` et `GMAIL_APP_PASSWORD` (le mot de passe à 16 caractères, sans espaces).
+
+### 2. Google Sheet (recensement)
+
+1. Crée une feuille Google. Optionnel : mets une ligne d'en-tête `Date | Nom | Email`.
+2. Récupère son **ID** (entre `/d/` et `/edit` dans l'URL) → `GOOGLE_SHEETS_ID`.
+3. Sur [Google Cloud Console](https://console.cloud.google.com/) : crée un projet, active **Google Sheets API**.
+4. Crée un **compte de service**, génère une **clé JSON**.
+5. Depuis le JSON : `client_email` → `GOOGLE_SERVICE_ACCOUNT_EMAIL`, `private_key` → `GOOGLE_PRIVATE_KEY`.
+6. **Partage la feuille** (bouton *Partager*) avec l'e-mail du compte de service en **Éditeur**.
+
+> En production (Vercel), ajoute ces mêmes variables dans *Project Settings → Environment Variables*.
+> Pour `GOOGLE_PRIVATE_KEY`, conserve les `\n` littéraux (ils sont reconvertis côté serveur).
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

@@ -2,6 +2,7 @@
 import { Canvas } from "@react-three/fiber";
 import { ScrollControls, Scroll, Environment, Lightformer } from "@react-three/drei";
 import { Richard3DModel } from "@/components/Richard3DModel";
+import { SignupForm } from "@/components/SignupForm";
 
 // Panneau sombre semi-transparent + flou : garantit la lisibilité du texte
 // même lorsque le logo 3D passe derrière.
@@ -157,11 +158,7 @@ export default function Home() {
               <div className="bg-black/50 backdrop-blur-md border border-white/10 p-10 md:p-14 rounded-3xl shadow-2xl w-full max-w-xl text-center">
                 <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 break-words leading-tight">Testez l'avenir.</h2>
                 <p className="text-gray-200 mb-8 font-light text-lg">Le MVP est <strong className="text-[#10B981]">en ligne</strong>. Rejoignez la communauté Richard AI.</p>
-                <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
-                  <input type="text" placeholder="Nom complet" className="w-full p-4 rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#10B981] transition-colors"/>
-                  <input type="email" placeholder="Adresse email" required className="w-full p-4 rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#10B981] transition-colors"/>
-                  <button type="submit" className="w-full mt-2 p-4 bg-[#10B981] hover:bg-[#059669] rounded-xl font-bold text-white transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.6)]">Accéder en exclusivité</button>
-                </form>
+                <SignupForm />
                 <a href="https://www.richardlecomptable.com" className="block mt-6 text-sm text-gray-400 hover:text-[#10B981] transition-colors">www.richardlecomptable.com</a>
               </div>
             </section>
