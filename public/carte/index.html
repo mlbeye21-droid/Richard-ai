@@ -34,26 +34,32 @@
     <style>
       html { -webkit-text-size-adjust: 100%; }
       body { font-family: "Inter", ui-sans-serif, system-ui, sans-serif; }
-      /* Fond : image assombrie pour un rendu sombre et élégant (chemin absolu
-         pour fonctionner aussi bien sur /carte que /carte/index.html). */
+      /* Couches de fond en CSS pur (ne dépendent pas de Tailwind, donc fiables
+         même si un CDN tarde) — chemin absolu pour marcher sur /carte aussi. */
+      .bg-layer { position: fixed; inset: 0; }
       .bg-pattern {
-        background-image: url("/carte/image.png");
-        background-size: cover;
-        background-position: center;
-        filter: brightness(0.32) saturate(1.3) contrast(1.05);
+        z-index: -3;
+        background: url("/carte/image.png") center / cover no-repeat;
+        /* L'image source est claire (icônes grises sur blanc). invert + hue-rotate
+           la passe en sombre tout en gardant le motif et les vagues vertes visibles. */
+        filter: invert(0.9) hue-rotate(180deg) brightness(0.85) contrast(1.05);
+      }
+      .bg-overlay {
+        z-index: -2;
+        background: linear-gradient(180deg, rgba(4, 18, 13, 0.55), rgba(4, 18, 13, 0.78));
+      }
+      .bg-glow {
+        z-index: -1;
+        background: radial-gradient(circle at 50% 16%, rgba(16, 185, 129, 0.22), transparent 55%);
       }
     </style>
   </head>
 
   <body class="min-h-[100svh] bg-[#06120d] text-white antialiased">
     <!-- Couches de fond -->
-    <div class="bg-pattern fixed inset-0 -z-30" aria-hidden="true"></div>
-    <div class="fixed inset-0 -z-20 bg-black/55" aria-hidden="true"></div>
-    <div
-      class="fixed inset-0 -z-10"
-      aria-hidden="true"
-      style="background: radial-gradient(circle at 50% 18%, rgba(16, 185, 129, 0.22), transparent 55%);"
-    ></div>
+    <div class="bg-layer bg-pattern" aria-hidden="true"></div>
+    <div class="bg-layer bg-overlay" aria-hidden="true"></div>
+    <div class="bg-layer bg-glow" aria-hidden="true"></div>
 
     <!-- Carte -->
     <main class="mx-auto flex min-h-[100svh] w-full max-w-sm flex-col items-center justify-center px-6 py-10">
