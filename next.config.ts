@@ -12,15 +12,10 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return {
       beforeFiles: [
-        // Sur le domaine dédié, la racine "/" affiche directement la carte.
+        // Sur le sous-domaine dédié, la racine "/" affiche directement la carte.
         {
           source: "/",
-          has: [{ type: "host", value: "richard-ai.com" }],
-          destination: "/carte/index.html",
-        },
-        {
-          source: "/",
-          has: [{ type: "host", value: "www.richard-ai.com" }],
+          has: [{ type: "host", value: "carte.richardlecomptable.com" }],
           destination: "/carte/index.html",
         },
       ],
@@ -37,9 +32,8 @@ const nextConfig: NextConfig = {
     return [
       { source: "/carte", headers: noCache },
       { source: "/carte/:path*", headers: noCache },
-      // Racine du domaine dédié (qui sert la carte) : pas de cache agressif.
-      { source: "/", has: [{ type: "host", value: "richard-ai.com" }], headers: noCache },
-      { source: "/", has: [{ type: "host", value: "www.richard-ai.com" }], headers: noCache },
+      // Racine du sous-domaine dédié (qui sert la carte) : pas de cache agressif.
+      { source: "/", has: [{ type: "host", value: "carte.richardlecomptable.com" }], headers: noCache },
     ];
   },
 };
