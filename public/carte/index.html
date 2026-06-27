@@ -37,39 +37,46 @@
       /* Couches de fond en CSS pur (ne dépendent pas de Tailwind, donc fiables
          même si un CDN tarde) — chemin absolu pour marcher sur /carte aussi. */
       .bg-layer { position: fixed; inset: 0; overflow: hidden; }
-      /* Fond clair : l'image est affichée telle quelle (chemin absolu).
-         Animation : lente dérive (effet Ken Burns) pour donner vie au fond. */
+      /* Fond clair : l'image (motif) en base, adoucie pour laisser place aux vagues. */
       .bg-pattern {
-        z-index: -3;
+        z-index: -4;
         background: url("/carte/image.png") center / cover no-repeat;
         filter: saturate(1.05);
-        transform: scale(1.12);
-        animation: bgDrift 34s ease-in-out infinite alternate;
-        will-change: transform;
       }
-      @keyframes bgDrift {
-        0%   { transform: scale(1.12) translate3d(-1.6%, -1.1%, 0); }
-        100% { transform: scale(1.12) translate3d(1.6%, 1.1%, 0); }
-      }
-      /* Voile blanc très léger pour adoucir le motif derrière le contenu. */
       .bg-overlay {
-        z-index: -2;
-        background: rgba(255, 255, 255, 0.14);
+        z-index: -3;
+        background: rgba(255, 255, 255, 0.28);
       }
-      /* Halo vert animé (couleur de marque) qui pulse doucement. */
-      .bg-glow {
-        z-index: -1;
-        background: radial-gradient(60% 50% at 50% 28%, rgba(69, 187, 30, 0.20), transparent 70%);
-        animation: glowPulse 9s ease-in-out infinite alternate;
-        will-change: opacity, transform;
+
+      /* --- Vagues vertes animées (en bas) --- */
+      .waves { position: fixed; left: 0; right: 0; bottom: 0; height: 46vh; z-index: -2; overflow: hidden; pointer-events: none; }
+      .wave-row { position: absolute; bottom: 0; left: 0; display: flex; width: 200%; }
+      .wave-row svg { width: 50%; height: 100%; display: block; }
+      .wave1 { height: 46vh; opacity: 0.20; animation: waveFlow 13s linear infinite; }
+      .wave2 { height: 40vh; opacity: 0.28; animation: waveFlow 20s linear infinite reverse; }
+      .wave3 { height: 34vh; opacity: 0.16; animation: waveFlow 9s linear infinite; }
+      @keyframes waveFlow {
+        from { transform: translate3d(0, 0, 0); }
+        to   { transform: translate3d(-50%, 0, 0); }
       }
-      @keyframes glowPulse {
-        0%   { opacity: 0.5; transform: translateY(-2%) scale(1); }
-        100% { opacity: 1;   transform: translateY(2%) scale(1.06); }
+
+      /* --- Scintillement : particules vertes qui clignotent --- */
+      .sparkles { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+      .spark {
+        position: absolute; width: 6px; height: 6px; border-radius: 9999px;
+        background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(69,187,30,0.9) 45%, transparent 70%);
+        opacity: 0; transform: scale(0.5);
+        animation: twinkle 3.2s ease-in-out infinite;
       }
+      @keyframes twinkle {
+        0%, 100% { opacity: 0; transform: scale(0.4); }
+        50%      { opacity: 1; transform: scale(1); }
+      }
+
       /* Accessibilité : pas d'animation si l'utilisateur préfère le mouvement réduit. */
       @media (prefers-reduced-motion: reduce) {
-        .bg-pattern, .bg-glow { animation: none; transform: none; }
+        .wave1, .wave2, .wave3, .spark { animation: none; }
+        .sparkles { display: none; }
       }
     </style>
   </head>
@@ -78,7 +85,25 @@
     <!-- Couches de fond (animées) -->
     <div class="bg-layer bg-pattern" aria-hidden="true"></div>
     <div class="bg-layer bg-overlay" aria-hidden="true"></div>
-    <div class="bg-layer bg-glow" aria-hidden="true"></div>
+
+    <!-- Vagues vertes animées -->
+    <div class="waves" aria-hidden="true">
+      <div class="wave-row wave1">
+        <svg viewBox="0 0 1440 220" preserveAspectRatio="none"><path fill="#45BB1E" d="M0,110 C240,40 480,180 720,110 C960,40 1200,180 1440,110 L1440,220 L0,220 Z"/></svg>
+        <svg viewBox="0 0 1440 220" preserveAspectRatio="none"><path fill="#45BB1E" d="M0,110 C240,40 480,180 720,110 C960,40 1200,180 1440,110 L1440,220 L0,220 Z"/></svg>
+      </div>
+      <div class="wave-row wave2">
+        <svg viewBox="0 0 1440 220" preserveAspectRatio="none"><path fill="#2f8f1e" d="M0,110 C240,40 480,180 720,110 C960,40 1200,180 1440,110 L1440,220 L0,220 Z"/></svg>
+        <svg viewBox="0 0 1440 220" preserveAspectRatio="none"><path fill="#2f8f1e" d="M0,110 C240,40 480,180 720,110 C960,40 1200,180 1440,110 L1440,220 L0,220 Z"/></svg>
+      </div>
+      <div class="wave-row wave3">
+        <svg viewBox="0 0 1440 220" preserveAspectRatio="none"><path fill="#7ad96a" d="M0,110 C240,40 480,180 720,110 C960,40 1200,180 1440,110 L1440,220 L0,220 Z"/></svg>
+        <svg viewBox="0 0 1440 220" preserveAspectRatio="none"><path fill="#7ad96a" d="M0,110 C240,40 480,180 720,110 C960,40 1200,180 1440,110 L1440,220 L0,220 Z"/></svg>
+      </div>
+    </div>
+
+    <!-- Scintillement (particules générées en JS) -->
+    <div class="sparkles" id="sparkles" aria-hidden="true"></div>
 
     <!-- Carte (sans panneau : contenu directement sur le fond clair) -->
     <main class="mx-auto flex min-h-[100svh] w-full max-w-sm flex-col items-center justify-center px-6 py-10 text-center">
@@ -160,6 +185,24 @@
     <script>
       lucide.createIcons();
       document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Génère les particules scintillantes (sauf si mouvement réduit)
+      (function () {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const sp = document.getElementById("sparkles");
+        if (!sp) return;
+        for (let i = 0; i < 18; i++) {
+          const s = document.createElement("span");
+          s.className = "spark";
+          const sz = (4 + Math.random() * 6).toFixed(1);
+          s.style.width = s.style.height = sz + "px";
+          s.style.left = (Math.random() * 100).toFixed(2) + "%";
+          s.style.top = (Math.random() * 88).toFixed(2) + "%";
+          s.style.animationDelay = (Math.random() * 3.2).toFixed(2) + "s";
+          s.style.animationDuration = (2.4 + Math.random() * 2.4).toFixed(2) + "s";
+          sp.appendChild(s);
+        }
+      })();
     </script>
   </body>
 </html>
