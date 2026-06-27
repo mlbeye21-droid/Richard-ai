@@ -58,13 +58,19 @@
 
     <!-- Carte (sans panneau : contenu directement sur le fond clair) -->
     <main class="mx-auto flex min-h-[100svh] w-full max-w-sm flex-col items-center justify-center px-6 py-10 text-center">
-      <!-- Photo de profil (remplace photo.jpg par ta photo) -->
-      <img
-        src="/carte/photo.jpg"
-        alt="Photo de profil de Mamadou Lamine Beye"
-        class="h-28 w-28 rounded-full border-[3px] border-[#45BB1E] object-cover shadow-xl"
-        onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect width=%22200%22 height=%22200%22 fill=%22%230b1f17%22/><circle cx=%22100%22 cy=%2278%22 r=%2236%22 fill=%22%2310B981%22/><path d=%22M40 178c0-33 27-58 60-58s60 25 60 58z%22 fill=%22%2310B981%22/></svg>';"
-      />
+      <!-- Photo de profil + badge logo (remplace photo.jpg par ta photo) -->
+      <div class="relative inline-block">
+        <img
+          src="/carte/photo.jpg"
+          alt="Photo de profil de Mamadou Lamine Beye"
+          class="h-28 w-28 rounded-full border-[3px] border-[#45BB1E] object-cover shadow-xl"
+          onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect width=%22200%22 height=%22200%22 fill=%22%230b1f17%22/><circle cx=%22100%22 cy=%2278%22 r=%2236%22 fill=%22%2310B981%22/><path d=%22M40 178c0-33 27-58 60-58s60 25 60 58z%22 fill=%22%2310B981%22/></svg>';"
+        />
+        <!-- Badge logo Richard AI (bas-droite) -->
+        <span class="absolute -bottom-1 -right-1 flex h-11 w-11 items-center justify-center rounded-full border-2 border-[#45BB1E] bg-white shadow-md">
+          <img src="/carte/logo.png" alt="Logo Richard AI" class="h-8 w-8 object-contain" />
+        </span>
+      </div>
 
       <!-- Nom -->
       <h1
