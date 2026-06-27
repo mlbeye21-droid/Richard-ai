@@ -9,18 +9,10 @@ const nextConfig: NextConfig = {
   // - Sur le sous-domaine carte.richardlecomptable.com : la racine "/" affiche
   //   directement la carte (URL toute propre).
   // - Partout ailleurs : /carte -> /carte/index.html (la landing reste sur "/").
+  // Le routage racine du sous-domaine carte.richardlecomptable.com est géré par
+  // src/proxy.ts (Proxy/Middleware Next 16). Ici on garde juste /carte propre.
   async rewrites() {
-    return {
-      beforeFiles: [
-        // Sur le sous-domaine dédié, la racine "/" affiche directement la carte.
-        {
-          source: "/",
-          has: [{ type: "host", value: "carte.richardlecomptable.com" }],
-          destination: "/carte/index.html",
-        },
-      ],
-      afterFiles: [{ source: "/carte", destination: "/carte/index.html" }],
-    };
+    return [{ source: "/carte", destination: "/carte/index.html" }];
   },
 
   // Empêche la mise en cache agressive de la carte : le navigateur revalide à
