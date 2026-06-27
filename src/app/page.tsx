@@ -39,7 +39,7 @@ export default function Home() {
             {/* 2. PROBLÈME */}
             <section className="h-screen flex flex-col items-start justify-center px-10 md:px-32 text-left w-full pointer-events-none">
               <div className={`${panel} p-8 md:p-10 max-w-3xl`}>
-                <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">Le fardeau de la recherche.</h2>
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 break-words leading-tight">Le fardeau de la recherche.</h2>
                 <p className="text-xl md:text-2xl text-gray-200 font-light leading-relaxed mb-6">En moyenne, <strong className="text-[#10B981]">2,5 heures perdues</strong> chaque jour à fouiller dans les Actes Uniformes, le SYSCOHADA et les codes fiscaux.</p>
                 <ul className="space-y-3 text-lg md:text-xl text-gray-200 font-light">
                   <li className="flex items-start gap-3"><span className="text-[#10B981] mt-1">—</span> Des erreurs comptables et fiscales fréquentes dans les PME.</li>
@@ -54,7 +54,7 @@ export default function Home() {
             <section className="h-screen flex flex-col items-center justify-center px-6 md:px-20 text-center w-full pointer-events-none">
               <div className={`${panel} px-8 py-6 mb-8`}>
                 <span className="text-[#10B981] font-bold tracking-widest uppercase text-sm mb-3 block">La solution</span>
-                <h2 className="text-4xl md:text-6xl font-bold text-white">Une intelligence qui grandit avec vous.</h2>
+                <h2 className="text-4xl md:text-5xl font-bold text-white break-words leading-tight">Une intelligence qui grandit avec vous.</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-5 w-full max-w-6xl">
                 {[
@@ -113,7 +113,7 @@ export default function Home() {
             <section className="h-screen flex flex-col items-center justify-center px-6 md:px-20 text-center w-full pointer-events-none">
               <div className={`${panel} px-8 md:px-14 py-10 md:py-12 max-w-5xl`}>
                 <span className="text-[#10B981] font-bold tracking-widest uppercase text-sm mb-3 block">Le marché</span>
-                <h2 className="text-4xl md:text-6xl font-bold text-white mb-10">300 millions de personnes.</h2>
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-10 break-words leading-tight">300 millions de personnes.</h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full mb-10">
                   {[
                     { n: "17", l: "pays OHADA" },
@@ -135,7 +135,7 @@ export default function Home() {
             <section className="h-screen flex flex-col items-start justify-center px-10 md:px-32 text-left w-full pointer-events-none">
               <div className={`${panel} p-8 md:p-10 max-w-3xl`}>
                 <span className="text-[#10B981] font-bold tracking-widest uppercase text-sm mb-3 block">La trajectoire</span>
-                <h2 className="text-4xl md:text-6xl font-bold text-white mb-10">Une roadmap claire.</h2>
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-10 break-words leading-tight">Une roadmap claire.</h2>
                 <div className="space-y-5">
                   {[
                     { d: "Août 2026", t: "MVP V1 : Le Documentaire + L'Interprète + Journalisation Intelligente." },
@@ -155,7 +155,7 @@ export default function Home() {
             {/* 10. CTA */}
             <section className="h-screen flex flex-col items-center justify-center px-6 pointer-events-auto">
               <div className="bg-black/50 backdrop-blur-md border border-white/10 p-10 md:p-14 rounded-3xl shadow-2xl w-full max-w-xl text-center">
-                <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Testez l'avenir.</h2>
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 break-words leading-tight">Testez l'avenir.</h2>
                 <p className="text-gray-200 mb-8 font-light text-lg">Le MVP est <strong className="text-[#10B981]">en ligne</strong>. Rejoignez la communauté Richard AI.</p>
                 <form className="flex flex-col gap-4" onSubmit={(e) => e.preventDefault()}>
                   <input type="text" placeholder="Nom complet" className="w-full p-4 rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#10B981] transition-colors"/>
