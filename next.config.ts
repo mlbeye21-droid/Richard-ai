@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-// Redéploiement propre après suppression des projets Vercel en double (2026-06-27).
+// Redéploiement de la version sans animations (2026-06-28).
 const nextConfig: NextConfig = {
   // Désactivé : le double-montage du StrictMode (dev) est incompatible avec le
   // portail HTML de <Scroll html> de @react-three/drei (createRoot appelé 2x).
