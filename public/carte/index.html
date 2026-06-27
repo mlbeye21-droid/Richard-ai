@@ -36,74 +36,25 @@
       body { font-family: "Inter", ui-sans-serif, system-ui, sans-serif; }
       /* Couches de fond en CSS pur (ne dépendent pas de Tailwind, donc fiables
          même si un CDN tarde) — chemin absolu pour marcher sur /carte aussi. */
-      .bg-layer { position: fixed; inset: 0; overflow: hidden; }
-      /* Fond clair : l'image (motif) en base, adoucie pour laisser place aux vagues. */
+      .bg-layer { position: fixed; inset: 0; }
+      /* Fond clair statique : l'image telle quelle (chemin absolu). */
       .bg-pattern {
-        z-index: -4;
+        z-index: -3;
         background: url("/carte/image.png") center / cover no-repeat;
         filter: saturate(1.05);
       }
+      /* Voile blanc léger pour adoucir le motif derrière le contenu. */
       .bg-overlay {
-        z-index: -3;
-        background: rgba(255, 255, 255, 0.28);
-      }
-
-      /* --- Vagues vertes animées (en bas) --- */
-      .waves { position: fixed; left: 0; right: 0; bottom: 0; height: 46vh; z-index: -2; overflow: hidden; pointer-events: none; }
-      .wave-row { position: absolute; bottom: 0; left: 0; display: flex; width: 200%; }
-      .wave-row svg { width: 50%; height: 100%; display: block; }
-      .wave1 { height: 48vh; opacity: 0.30; animation: waveFlow 13s linear infinite; }
-      .wave2 { height: 42vh; opacity: 0.40; animation: waveFlow 20s linear infinite reverse; }
-      .wave3 { height: 36vh; opacity: 0.24; animation: waveFlow 9s linear infinite; }
-      @keyframes waveFlow {
-        from { transform: translate3d(0, 0, 0); }
-        to   { transform: translate3d(-50%, 0, 0); }
-      }
-
-      /* --- Scintillement : particules vertes qui clignotent --- */
-      .sparkles { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
-      .spark {
-        position: absolute; width: 6px; height: 6px; border-radius: 9999px;
-        background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(69,187,30,0.9) 45%, transparent 70%);
-        opacity: 0; transform: scale(0.5);
-        animation: twinkle 3.2s ease-in-out infinite;
-      }
-      @keyframes twinkle {
-        0%, 100% { opacity: 0; transform: scale(0.4); }
-        50%      { opacity: 1; transform: scale(1); }
-      }
-
-      /* Accessibilité : pas d'animation si l'utilisateur préfère le mouvement réduit. */
-      @media (prefers-reduced-motion: reduce) {
-        .wave1, .wave2, .wave3, .spark { animation: none; }
-        .sparkles { display: none; }
+        z-index: -2;
+        background: rgba(255, 255, 255, 0.14);
       }
     </style>
   </head>
 
   <body class="min-h-[100svh] bg-[#06120d] text-white antialiased">
-    <!-- Couches de fond (animées) -->
+    <!-- Couches de fond (statique) -->
     <div class="bg-layer bg-pattern" aria-hidden="true"></div>
     <div class="bg-layer bg-overlay" aria-hidden="true"></div>
-
-    <!-- Vagues vertes animées -->
-    <div class="waves" aria-hidden="true">
-      <div class="wave-row wave1">
-        <svg viewBox="0 0 1440 220" preserveAspectRatio="none"><path fill="#45BB1E" d="M0,110 C240,40 480,180 720,110 C960,40 1200,180 1440,110 L1440,220 L0,220 Z"/></svg>
-        <svg viewBox="0 0 1440 220" preserveAspectRatio="none"><path fill="#45BB1E" d="M0,110 C240,40 480,180 720,110 C960,40 1200,180 1440,110 L1440,220 L0,220 Z"/></svg>
-      </div>
-      <div class="wave-row wave2">
-        <svg viewBox="0 0 1440 220" preserveAspectRatio="none"><path fill="#2f8f1e" d="M0,110 C240,40 480,180 720,110 C960,40 1200,180 1440,110 L1440,220 L0,220 Z"/></svg>
-        <svg viewBox="0 0 1440 220" preserveAspectRatio="none"><path fill="#2f8f1e" d="M0,110 C240,40 480,180 720,110 C960,40 1200,180 1440,110 L1440,220 L0,220 Z"/></svg>
-      </div>
-      <div class="wave-row wave3">
-        <svg viewBox="0 0 1440 220" preserveAspectRatio="none"><path fill="#7ad96a" d="M0,110 C240,40 480,180 720,110 C960,40 1200,180 1440,110 L1440,220 L0,220 Z"/></svg>
-        <svg viewBox="0 0 1440 220" preserveAspectRatio="none"><path fill="#7ad96a" d="M0,110 C240,40 480,180 720,110 C960,40 1200,180 1440,110 L1440,220 L0,220 Z"/></svg>
-      </div>
-    </div>
-
-    <!-- Scintillement (particules générées en JS) -->
-    <div class="sparkles" id="sparkles" aria-hidden="true"></div>
 
     <!-- Carte (sans panneau : contenu directement sur le fond clair) -->
     <main class="mx-auto flex min-h-[100svh] w-full max-w-sm flex-col items-center justify-center px-6 py-10 text-center">
@@ -186,24 +137,6 @@
       // Lucide via CDN : si le chargement échoue, on ne bloque pas le reste.
       try { lucide.createIcons(); } catch (e) {}
       document.getElementById("year").textContent = new Date().getFullYear();
-
-      // Génère les particules scintillantes (sauf si mouvement réduit)
-      (function () {
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-        const sp = document.getElementById("sparkles");
-        if (!sp) return;
-        for (let i = 0; i < 18; i++) {
-          const s = document.createElement("span");
-          s.className = "spark";
-          const sz = (4 + Math.random() * 6).toFixed(1);
-          s.style.width = s.style.height = sz + "px";
-          s.style.left = (Math.random() * 100).toFixed(2) + "%";
-          s.style.top = (Math.random() * 88).toFixed(2) + "%";
-          s.style.animationDelay = (Math.random() * 3.2).toFixed(2) + "s";
-          s.style.animationDuration = (2.4 + Math.random() * 2.4).toFixed(2) + "s";
-          sp.appendChild(s);
-        }
-      })();
     </script>
   </body>
 </html>
