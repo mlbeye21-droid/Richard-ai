@@ -55,22 +55,44 @@ L'équipe Richard AI
 www.richardlecomptable.com`;
 }
 
-async function sendWelcomeEmail(name: string, email: string) {
+function getTransporter() {
   const user = process.env.GMAIL_USER;
   const pass = process.env.GMAIL_APP_PASSWORD;
   if (!user || !pass) throw new Error("GMAIL_USER / GMAIL_APP_PASSWORD manquants");
+  return {
+    user,
+    transporter: nodemailer.createTransport({ service: "gmail", auth: { user, pass } }),
+  };
+}
 
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: { user, pass },
-  });
-
+async function sendWelcomeEmail(name: string, email: string) {
+  const { user, transporter } = getTransporter();
   await transporter.sendMail({
     from: `Richard AI <${user}>`,
     to: email,
     subject: "Bienvenue dans le programme testeurs de Richard AI 🎉",
     text: welcomeText(name),
     html: welcomeHtml(name),
+  });
+}
+
+// Notifie l'équipe à chaque inscription (copie dans la boîte de recensement).
+async function notifyAdmin(name: string, email: string) {
+  const { user, transporter } = getTransporter();
+  const admin = process.env.ADMIN_EMAIL || user;
+  const date = new Date().toLocaleString("fr-FR", { timeZone: "Africa/Dakar" });
+  await transporter.sendMail({
+    from: `Richard AI <${user}>`,
+    to: admin,
+    replyTo: email,
+    subject: `Nouveau testeur inscrit : ${email}`,
+    text: `Nouvelle inscription au programme testeurs Richard AI.\n\nNom : ${name || "(non renseigné)"}\nEmail : ${email}\nDate : ${date}`,
+    html: `<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#111;">
+      <h2 style="margin:0 0 12px;">Nouveau testeur inscrit 🎯</h2>
+      <p style="margin:0 0 6px;"><strong>Nom :</strong> ${name || "(non renseigné)"}</p>
+      <p style="margin:0 0 6px;"><strong>Email :</strong> <a href="mailto:${email}">${email}</a></p>
+      <p style="margin:0;"><strong>Date :</strong> ${date}</p>
+    </div>`,
   });
 }
 
@@ -115,29 +137,29 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Adresse email invalide." }, { status: 400 });
   }
 
-  // On tente l'envoi de l'e-mail et l'enregistrement dans le Sheet
-  // indépendamment, pour ne pas tout perdre si l'un des deux échoue.
-  const results = await Promise.allSettled([
+  // On tente l'e-mail de bienvenue, la notification admin et l'enregistrement
+  // dans le Sheet indépendamment, pour ne rien perdre si l'un d'eux échoue.
+  const [welcome, admin, sheet] = await Promise.allSettled([
     sendWelcomeEmail(name, email),
+    notifyAdmin(name, email),
     appendToSheet(name, email),
   ]);
 
-  const emailOk = results[0].status === "fulfilled";
-  const sheetOk = results[1].status === "fulfilled";
+  const emailOk = welcome.status === "fulfilled";
+  const adminOk = admin.status === "fulfilled";
+  const sheetOk = sheet.status === "fulfilled";
 
-  if (results[0].status === "rejected") {
-    console.error("[register] e-mail échoué:", results[0].reason);
-  }
-  if (results[1].status === "rejected") {
-    console.error("[register] Google Sheet échoué:", results[1].reason);
-  }
+  if (welcome.status === "rejected") console.error("[register] e-mail bienvenue échoué:", welcome.reason);
+  if (admin.status === "rejected") console.error("[register] notification admin échouée:", admin.reason);
+  if (sheet.status === "rejected") console.error("[register] Google Sheet échoué:", sheet.reason);
 
-  if (!emailOk && !sheetOk) {
+  // Échec total uniquement si aucune trace de l'inscription n'a pu être conservée.
+  if (!emailOk && !adminOk && !sheetOk) {
     return NextResponse.json(
       { error: "Une erreur est survenue. Réessaie dans un instant." },
       { status: 500 }
     );
   }
 
-  return NextResponse.json({ ok: true, emailOk, sheetOk });
+  return NextResponse.json({ ok: true, emailOk, adminOk, sheetOk });
 }

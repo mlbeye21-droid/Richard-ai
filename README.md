@@ -25,7 +25,8 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 Le formulaire de la landing envoie les coordonnées à la route `POST /api/register`, qui :
 
 1. envoie un **e-mail de bienvenue** au testeur depuis `richardlecomptable@gmail.com` (Gmail SMTP) ;
-2. ajoute une ligne au **Google Sheet** de recensement (`date ISO`, `nom`, `email`).
+2. envoie une **copie de notification** à l'équipe (`ADMIN_EMAIL`, par défaut `GMAIL_USER`) ;
+3. ajoute une ligne au **Google Sheet** de recensement (`date ISO`, `nom`, `email`).
 
 Copie `.env.example` vers `.env.local` et renseigne les variables :
 
