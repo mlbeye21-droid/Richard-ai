@@ -56,47 +56,43 @@
     <div class="bg-layer bg-pattern" aria-hidden="true"></div>
     <div class="bg-layer bg-overlay" aria-hidden="true"></div>
 
-    <!-- Carte -->
-    <main class="mx-auto flex min-h-[100svh] w-full max-w-sm flex-col items-center justify-center px-5 py-10">
-      <!-- Panneau translucide : garde le contenu lisible par-dessus le fond clair -->
-      <div class="flex w-full flex-col items-center rounded-3xl border border-white/10 bg-black/55 p-7 shadow-2xl backdrop-blur-xl">
+    <!-- Carte (sans panneau : contenu directement sur le fond clair) -->
+    <main class="mx-auto flex min-h-[100svh] w-full max-w-sm flex-col items-center justify-center px-6 py-10 text-center">
       <!-- Photo de profil (remplace photo.jpg par ta photo) -->
       <img
         src="/carte/photo.jpg"
-        alt="Photo de profil de Lamine Beye"
-        class="h-28 w-28 rounded-full border-2 border-brand/60 object-cover shadow-2xl shadow-emerald-500/20 ring-4 ring-brand/10"
+        alt="Photo de profil de Mamadou Lamine Beye"
+        class="h-28 w-28 rounded-full border-[3px] border-[#45BB1E] object-cover shadow-xl"
         onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect width=%22200%22 height=%22200%22 fill=%22%230b1f17%22/><circle cx=%22100%22 cy=%2278%22 r=%2236%22 fill=%22%2310B981%22/><path d=%22M40 178c0-33 27-58 60-58s60 25 60 58z%22 fill=%22%2310B981%22/></svg>';"
       />
 
-      <!-- Nom (modifie ici) -->
-      <h1 class="mt-6 text-center text-3xl font-extrabold uppercase tracking-wide text-white">
-        Lamine Beye
+      <!-- Nom -->
+      <h1 class="mt-5 text-3xl font-extrabold uppercase tracking-wide text-[#0a1a14]">
+        Mamadou Lamine BEYE
       </h1>
 
       <!-- Titre -->
-      <p class="mt-1 text-sm font-medium text-gray-400">
-        Fondateur <span class="text-brand">@ Richard AI</span>
-      </p>
+      <p class="mt-1 text-sm font-semibold text-[#15803d]">Fondateur Richard AI</p>
 
-      <!-- Boutons d'action -->
+      <!-- Boutons d'action (cadres verts #45BB1E = vert du fond) -->
       <nav class="mt-9 flex w-full flex-col gap-3.5" aria-label="Contacts">
         <a
           href="tel:+221771935720"
-          class="group flex items-center gap-3 rounded-full border border-brand/40 bg-white/5 px-5 py-3.5 backdrop-blur transition hover:border-brand hover:bg-brand/10 active:scale-[.98]"
+          class="group flex items-center gap-3 rounded-full border-2 border-[#45BB1E] bg-white/75 px-5 py-3.5 backdrop-blur transition hover:bg-white active:scale-[.98]"
         >
-          <i data-lucide="phone" class="h-5 w-5 shrink-0 text-brand"></i>
-          <span class="min-w-0 truncate text-sm font-medium">
-            Appeler <span class="text-gray-400">• +221 77 193 57 20</span>
+          <i data-lucide="phone" class="h-5 w-5 shrink-0 text-[#2f8f1e]"></i>
+          <span class="min-w-0 truncate text-sm font-semibold text-[#0a1a14]">
+            Appeler <span class="font-medium text-gray-600">• +221 77 193 57 20</span>
           </span>
         </a>
 
         <a
           href="mailto:mlbeye21@gmail.com"
-          class="group flex items-center gap-3 rounded-full border border-brand/40 bg-white/5 px-5 py-3.5 backdrop-blur transition hover:border-brand hover:bg-brand/10 active:scale-[.98]"
+          class="group flex items-center gap-3 rounded-full border-2 border-[#45BB1E] bg-white/75 px-5 py-3.5 backdrop-blur transition hover:bg-white active:scale-[.98]"
         >
-          <i data-lucide="mail" class="h-5 w-5 shrink-0 text-brand"></i>
-          <span class="min-w-0 truncate text-sm font-medium">
-            Email <span class="text-gray-400">• mlbeye21@gmail.com</span>
+          <i data-lucide="mail" class="h-5 w-5 shrink-0 text-[#2f8f1e]"></i>
+          <span class="min-w-0 truncate text-sm font-semibold text-[#0a1a14]">
+            Email <span class="font-medium text-gray-600">• mlbeye21@gmail.com</span>
           </span>
         </a>
 
@@ -104,11 +100,11 @@
           href="https://richardai-dev.nicomaticsenegal.com/"
           target="_blank"
           rel="noopener noreferrer"
-          class="group flex items-center gap-3 rounded-full border border-brand/40 bg-white/5 px-5 py-3.5 backdrop-blur transition hover:border-brand hover:bg-brand/10 active:scale-[.98]"
+          class="group flex items-center gap-3 rounded-full border-2 border-[#45BB1E] bg-white/75 px-5 py-3.5 backdrop-blur transition hover:bg-white active:scale-[.98]"
         >
-          <i data-lucide="globe" class="h-5 w-5 shrink-0 text-brand"></i>
-          <span class="min-w-0 truncate text-sm font-medium">
-            Visiter le site <span class="text-gray-400">• richardai-dev.nicomaticsenegal.com</span>
+          <i data-lucide="globe" class="h-5 w-5 shrink-0 text-[#2f8f1e]"></i>
+          <span class="min-w-0 truncate text-sm font-semibold text-[#0a1a14]">
+            Visiter le site <span class="font-medium text-gray-600">• richardai-dev.nicomaticsenegal.com</span>
           </span>
         </a>
       </nav>
@@ -116,17 +112,16 @@
       <!-- Bouton principal : enregistrer le contact -->
       <a
         href="/carte/contact.vcf"
-        download="Lamine-Beye-Richard-AI.vcf"
-        class="mt-5 flex w-full items-center justify-center gap-2.5 rounded-full bg-brand px-6 py-4 text-base font-bold text-[#04140d] shadow-lg shadow-emerald-500/30 transition hover:bg-emerald-400 active:scale-[.98]"
+        download="Mamadou-Lamine-Beye-Richard-AI.vcf"
+        class="mt-5 flex w-full items-center justify-center gap-2.5 rounded-full bg-[#45BB1E] px-6 py-4 text-base font-bold text-[#04140d] shadow-lg shadow-[#45BB1E]/40 transition hover:bg-[#3aa017] active:scale-[.98]"
       >
         <i data-lucide="user-plus" class="h-5 w-5"></i>
         Enregistrer dans mes contacts
       </a>
 
-      <footer class="mt-8 text-center text-xs text-gray-400">
+      <footer class="mt-8 text-xs font-medium text-gray-600">
         © <span id="year"></span> Richard AI · Carte de visite digitale
       </footer>
-      </div>
     </main>
 
     <script>
