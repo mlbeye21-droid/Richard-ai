@@ -34,12 +34,13 @@
     <style>
       html { -webkit-text-size-adjust: 100%; }
       body { font-family: "Inter", ui-sans-serif, system-ui, sans-serif; }
-      /* Fond : image assombrie pour un rendu sombre et discret */
+      /* Fond : image assombrie pour un rendu sombre et élégant (chemin absolu
+         pour fonctionner aussi bien sur /carte que /carte/index.html). */
       .bg-pattern {
-        background-image: url("image.png");
+        background-image: url("/carte/image.png");
         background-size: cover;
         background-position: center;
-        filter: brightness(0.16) saturate(1.25) contrast(1.05);
+        filter: brightness(0.32) saturate(1.3) contrast(1.05);
       }
     </style>
   </head>
@@ -47,7 +48,7 @@
   <body class="min-h-[100svh] bg-[#06120d] text-white antialiased">
     <!-- Couches de fond -->
     <div class="bg-pattern fixed inset-0 -z-30" aria-hidden="true"></div>
-    <div class="fixed inset-0 -z-20 bg-black/70" aria-hidden="true"></div>
+    <div class="fixed inset-0 -z-20 bg-black/55" aria-hidden="true"></div>
     <div
       class="fixed inset-0 -z-10"
       aria-hidden="true"
@@ -58,7 +59,7 @@
     <main class="mx-auto flex min-h-[100svh] w-full max-w-sm flex-col items-center justify-center px-6 py-10">
       <!-- Photo de profil (remplace photo.jpg par ta photo) -->
       <img
-        src="photo.jpg"
+        src="/carte/photo.jpg"
         alt="Photo de profil de Lamine Beye"
         class="h-28 w-28 rounded-full border-2 border-brand/60 object-cover shadow-2xl shadow-emerald-500/20 ring-4 ring-brand/10"
         onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect width=%22200%22 height=%22200%22 fill=%22%230b1f17%22/><circle cx=%22100%22 cy=%2278%22 r=%2236%22 fill=%22%2310B981%22/><path d=%22M40 178c0-33 27-58 60-58s60 25 60 58z%22 fill=%22%2310B981%22/></svg>';"
@@ -111,7 +112,7 @@
 
       <!-- Bouton principal : enregistrer le contact -->
       <a
-        href="contact.vcf"
+        href="/carte/contact.vcf"
         download="Lamine-Beye-Richard-AI.vcf"
         class="mt-5 flex w-full items-center justify-center gap-2.5 rounded-full bg-brand px-6 py-4 text-base font-bold text-[#04140d] shadow-lg shadow-emerald-500/30 transition hover:bg-emerald-400 active:scale-[.98]"
       >
