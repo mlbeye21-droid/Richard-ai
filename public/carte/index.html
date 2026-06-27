@@ -37,20 +37,16 @@
       /* Couches de fond en CSS pur (ne dépendent pas de Tailwind, donc fiables
          même si un CDN tarde) — chemin absolu pour marcher sur /carte aussi. */
       .bg-layer { position: fixed; inset: 0; }
+      /* Fond clair : l'image est affichée telle quelle (chemin absolu). */
       .bg-pattern {
         z-index: -3;
         background: url("/carte/image.png") center / cover no-repeat;
-        /* L'image source est claire (icônes grises sur blanc). invert + hue-rotate
-           la passe en sombre tout en gardant le motif et les vagues vertes visibles. */
-        filter: invert(0.9) hue-rotate(180deg) brightness(0.85) contrast(1.05);
+        filter: saturate(1.05);
       }
+      /* Voile blanc très léger pour adoucir le motif derrière le contenu. */
       .bg-overlay {
         z-index: -2;
-        background: linear-gradient(180deg, rgba(4, 18, 13, 0.55), rgba(4, 18, 13, 0.78));
-      }
-      .bg-glow {
-        z-index: -1;
-        background: radial-gradient(circle at 50% 16%, rgba(16, 185, 129, 0.22), transparent 55%);
+        background: rgba(255, 255, 255, 0.14);
       }
     </style>
   </head>
@@ -59,10 +55,11 @@
     <!-- Couches de fond -->
     <div class="bg-layer bg-pattern" aria-hidden="true"></div>
     <div class="bg-layer bg-overlay" aria-hidden="true"></div>
-    <div class="bg-layer bg-glow" aria-hidden="true"></div>
 
     <!-- Carte -->
-    <main class="mx-auto flex min-h-[100svh] w-full max-w-sm flex-col items-center justify-center px-6 py-10">
+    <main class="mx-auto flex min-h-[100svh] w-full max-w-sm flex-col items-center justify-center px-5 py-10">
+      <!-- Panneau translucide : garde le contenu lisible par-dessus le fond clair -->
+      <div class="flex w-full flex-col items-center rounded-3xl border border-white/10 bg-black/55 p-7 shadow-2xl backdrop-blur-xl">
       <!-- Photo de profil (remplace photo.jpg par ta photo) -->
       <img
         src="/carte/photo.jpg"
@@ -126,9 +123,10 @@
         Enregistrer dans mes contacts
       </a>
 
-      <footer class="mt-10 text-center text-xs text-gray-500">
+      <footer class="mt-8 text-center text-xs text-gray-400">
         © <span id="year"></span> Richard AI · Carte de visite digitale
       </footer>
+      </div>
     </main>
 
     <script>
