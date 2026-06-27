@@ -1,8 +1,12 @@
 "use client";
 import { useMemo, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { useScroll } from "@react-three/drei";
 import * as THREE from "three";
+
+// Demi-hauteur visible à z=0 : tan(fov/2) * distance = tan(22.5°) * 6.
+const HALF_VIEW = Math.tan((45 / 2) * (Math.PI / 180)) * 6;
+const OBJECT_HALF_WIDTH = 2.1; // demi-largeur de la lemniscate (scale 2.1)
 
 /**
  * Courbe paramétrique en forme de "boucle infinie" (lemniscate de Bernoulli)
@@ -28,6 +32,7 @@ export function Richard3DModel() {
   const groupRef = useRef<THREE.Group>(null);
   const materialRef = useRef<THREE.MeshPhysicalMaterial>(null);
   const scroll = useScroll();
+  const size = useThree((s) => s.size);
 
   // Géométrie générée une seule fois (tube fermé suivant la lemniscate).
   const geometry = useMemo(() => {
@@ -47,16 +52,22 @@ export function Richard3DModel() {
       0.08
     );
 
-    // Déplacement latéral subtil au fil du scroll (recentré à la fin).
-    const targetX = offset > 0.85 ? 0 : Math.sin(offset * Math.PI) * 1.2;
+    // Échelle responsive : le logo doit tenir dans la largeur visible, même en
+    // portrait (mobile) où le champ horizontal est plus étroit.
+    const aspect = size.width / Math.max(1, size.height);
+    const fit = Math.min(1, ((HALF_VIEW * aspect) / OBJECT_HALF_WIDTH) * 0.9);
+
+    // Déplacement latéral subtil au fil du scroll (réduit sur écran étroit).
+    const amplitude = Math.min(1, aspect) * 1.2;
+    const targetX = offset > 0.85 ? 0 : Math.sin(offset * Math.PI) * amplitude;
     groupRef.current.position.x = THREE.MathUtils.lerp(
       groupRef.current.position.x,
       targetX,
       0.1
     );
 
-    // Léger zoom à mesure que l'on descend.
-    const targetScale = 1 + offset * 0.15;
+    // Léger zoom à mesure que l'on descend, appliqué sur l'échelle responsive.
+    const targetScale = fit * (1 + offset * 0.15);
     groupRef.current.scale.setScalar(
       THREE.MathUtils.lerp(groupRef.current.scale.x, targetScale, 0.1)
     );
