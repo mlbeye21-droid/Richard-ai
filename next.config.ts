@@ -5,27 +5,26 @@ const nextConfig: NextConfig = {
   // portail HTML de <Scroll html> de @react-three/drei (createRoot appelé 2x).
   reactStrictMode: false,
 
-  // URL propre pour la carte de visite, servie indépendamment de la landing.
-  // - Sur le sous-domaine carte.richardlecomptable.com : la racine "/" affiche
-  //   directement la carte (URL toute propre).
-  // - Partout ailleurs : /carte -> /carte/index.html (la landing reste sur "/").
-  // Le routage racine du sous-domaine carte.richardlecomptable.com est géré par
-  // src/proxy.ts (Proxy/Middleware Next 16). Ici on garde juste /carte propre.
+  // La racine "/" redirige vers la carte de visite (sur tous les domaines).
+  // La landing 3D n'est plus servie à la racine (son code reste dans le repo).
+  async redirects() {
+    return [{ source: "/", destination: "/carte", permanent: false }];
+  },
+
+  // /carte -> fichier statique de la carte.
   async rewrites() {
     return [{ source: "/carte", destination: "/carte/index.html" }];
   },
 
-  // Empêche la mise en cache agressive de la carte : le navigateur revalide à
-  // chaque chargement et voit donc les nouvelles versions immédiatement.
+  // Pas de cache agressif sur la carte (les mises à jour sont vues tout de suite).
   async headers() {
     const noCache = [
       { key: "Cache-Control", value: "public, max-age=0, must-revalidate" },
     ];
     return [
+      { source: "/", headers: noCache },
       { source: "/carte", headers: noCache },
       { source: "/carte/:path*", headers: noCache },
-      // Racine du sous-domaine dédié (qui sert la carte) : pas de cache agressif.
-      { source: "/", has: [{ type: "host", value: "carte.richardlecomptable.com" }], headers: noCache },
     ];
   },
 };
