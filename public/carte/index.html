@@ -52,9 +52,9 @@
       .waves { position: fixed; left: 0; right: 0; bottom: 0; height: 46vh; z-index: -2; overflow: hidden; pointer-events: none; }
       .wave-row { position: absolute; bottom: 0; left: 0; display: flex; width: 200%; }
       .wave-row svg { width: 50%; height: 100%; display: block; }
-      .wave1 { height: 46vh; opacity: 0.20; animation: waveFlow 13s linear infinite; }
-      .wave2 { height: 40vh; opacity: 0.28; animation: waveFlow 20s linear infinite reverse; }
-      .wave3 { height: 34vh; opacity: 0.16; animation: waveFlow 9s linear infinite; }
+      .wave1 { height: 48vh; opacity: 0.30; animation: waveFlow 13s linear infinite; }
+      .wave2 { height: 42vh; opacity: 0.40; animation: waveFlow 20s linear infinite reverse; }
+      .wave3 { height: 36vh; opacity: 0.24; animation: waveFlow 9s linear infinite; }
       @keyframes waveFlow {
         from { transform: translate3d(0, 0, 0); }
         to   { transform: translate3d(-50%, 0, 0); }
@@ -183,7 +183,8 @@
     </main>
 
     <script>
-      lucide.createIcons();
+      // Lucide via CDN : si le chargement échoue, on ne bloque pas le reste.
+      try { lucide.createIcons(); } catch (e) {}
       document.getElementById("year").textContent = new Date().getFullYear();
 
       // Génère les particules scintillantes (sauf si mouvement réduit)
