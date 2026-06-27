@@ -6,9 +6,20 @@ const nextConfig: NextConfig = {
   reactStrictMode: false,
 
   // URL propre pour la carte de visite, servie indépendamment de la landing.
-  // /carte  -> /carte/index.html (la landing reste sur "/").
+  // - Sur le sous-domaine carte.richardlecomptable.com : la racine "/" affiche
+  //   directement la carte (URL toute propre).
+  // - Partout ailleurs : /carte -> /carte/index.html (la landing reste sur "/").
   async rewrites() {
-    return [{ source: "/carte", destination: "/carte/index.html" }];
+    return {
+      beforeFiles: [
+        {
+          source: "/",
+          has: [{ type: "host", value: "carte.richardlecomptable.com" }],
+          destination: "/carte/index.html",
+        },
+      ],
+      afterFiles: [{ source: "/carte", destination: "/carte/index.html" }],
+    };
   },
 
   // Empêche la mise en cache agressive de la carte : le navigateur revalide à
