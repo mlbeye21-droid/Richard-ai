@@ -1,0 +1,53 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Emoji Richard">
+  <defs>
+    <!-- Halo vert de marque (rappel de la carte/logo) -->
+    <radialGradient id="r-glow" cx="50%" cy="42%" r="62%">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#10B981" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#0D1B18" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Visage : dégradé vert profond -> vert de marque -->
+    <linearGradient id="r-face" x1="64" y1="40" x2="192" y2="216" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="45%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#0a7a59"/>
+    </linearGradient>
+    <linearGradient id="r-shine" x1="80" y1="48" x2="128" y2="150" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="r-soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.2"/>
+    </filter>
+  </defs>
+
+  <!-- Fond sombre arrondi + halo -->
+  <rect x="0" y="0" width="256" height="256" rx="56" fill="#0D1B18"/>
+  <rect x="0" y="0" width="256" height="256" rx="56" fill="url(#r-glow)"/>
+
+  <!-- Tête -->
+  <circle cx="128" cy="128" r="84" fill="url(#r-face)" stroke="#04140d" stroke-width="3"/>
+  <!-- Reflet glossy (comme le logo en verre) -->
+  <ellipse cx="104" cy="92" rx="46" ry="30" fill="url(#r-shine)" filter="url(#r-soft)"/>
+
+  <!-- Lunettes de comptable -->
+  <g stroke="#04140d" stroke-width="6" fill="#0D1B18">
+    <circle cx="100" cy="120" r="24"/>
+    <circle cx="156" cy="120" r="24"/>
+    <path d="M124 120 q4 -8 8 0" fill="none" stroke-linecap="round"/>
+    <path d="M76 116 l-14 -8" fill="none" stroke-linecap="round"/>
+    <path d="M180 116 l14 -8" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- Yeux (regard vif) -->
+  <circle cx="103" cy="121" r="8" fill="#ffffff"/>
+  <circle cx="159" cy="121" r="8" fill="#ffffff"/>
+  <circle cx="105" cy="123" r="4" fill="#04140d"/>
+  <circle cx="161" cy="123" r="4" fill="#04140d"/>
+
+  <!-- Sourire amical -->
+  <path d="M104 162 q24 24 48 0" fill="none" stroke="#04140d" stroke-width="7" stroke-linecap="round"/>
+
+  <!-- Signature ∞ : le motif infini de Richard, sur le front -->
+  <path d="M112 74 c-6 -7 -18 -7 -18 2 c0 9 12 9 18 2 c6 -7 18 -7 18 -2 c0 9 -12 9 -18 -2 Z"
+        fill="none" stroke="#34d399" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+</svg>
