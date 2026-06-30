@@ -5,6 +5,14 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  // Le contenu du site est en français : apostrophes et guillemets sont
+  // omniprésents dans le JSX. On désactive donc cette règle plutôt que
+  // d'alourdir le texte avec des entités HTML.
+  {
+    rules: {
+      "react/no-unescaped-entities": "off",
+    },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
