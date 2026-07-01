@@ -25,10 +25,14 @@ L'assistant fonctionne **immédiatement**, sans configuration : la route
 `/api/chat` interroge une base de connaissances locale (`src/app/_data/knowledge.ts`)
 par un moteur de récupération et cite ses sources.
 
-Pour passer en **mode IA générative** (réponses plus riches, toujours ancrées sur
-la même base de connaissances), ajoutez au déploiement la variable
-d'environnement `ANTHROPIC_API_KEY` (et, optionnellement, `ANTHROPIC_MODEL`,
-par défaut `claude-sonnet-5`).
+Pour passer en **mode IA générative** (réponses plus riches et conversationnelles,
+toujours ancrées sur la même base de connaissances), ajoutez au déploiement la
+variable d'environnement `ANTHROPIC_API_KEY` (et, optionnellement,
+`ANTHROPIC_MODEL`, par défaut `claude-opus-4-8`). Voir `.env.example`.
+
+> ⚠️ La clé d'API est un **secret** : ne la mettez jamais dans le code ni dans
+> le dépôt. Renseignez-la dans les **variables d'environnement** de votre
+> hébergeur (Vercel → Settings → Environment Variables).
 
 ## Lancer en local
 
