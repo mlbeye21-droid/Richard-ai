@@ -13,8 +13,8 @@ export default function QuizPage() {
     <>
       <PageHero
         eyebrow="Auto-évaluation"
-        title="Quiz : 10 questions corrigées"
-        lead="Répondez aux questions puis affichez votre score. Chaque réponse est expliquée pour vous aider à réviser ce qui n'est pas encore acquis."
+        title="Quiz : 10 questions à chaque fois différentes"
+        lead="10 questions tirées au hasard d'une banque, avec des propositions mélangées : le quiz change à chaque partie. Répondez, affichez votre score, et chaque réponse est expliquée."
       />
       <Article>
         <Quiz />
