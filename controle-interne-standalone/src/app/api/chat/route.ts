@@ -85,13 +85,22 @@ async function tryClaude(messages: ChatMessage[], contextEntries: string) {
   const key = process.env.ANTHROPIC_API_KEY;
   if (!key) return null;
 
-  const model = process.env.ANTHROPIC_MODEL || "claude-sonnet-5";
+  const model = process.env.ANTHROPIC_MODEL || "claude-opus-4-8";
   const system = `Tu es l'assistant RICHARD CI, spécialisé dans le contrôle interne, pour des étudiants francophones.
-Réponds en français, de façon claire, pédagogique et concise.
-Appuie-toi UNIQUEMENT sur le contexte ci-dessous ; si l'information n'y figure pas, dis-le honnêtement et invite à consulter le cours. N'invente pas de sources.
+Réponds en français, de façon claire, pédagogique et vivante, avec des exemples concrets quand c'est utile.
+Appuie-toi en priorité sur le contexte ci-dessous ; si l'information n'y figure pas, dis-le honnêtement et invite à consulter le cours. N'invente pas de sources.
 
 Contexte (base de connaissances RICHARD CI) :
 ${contextEntries}`;
+
+  // L'API Anthropic exige que le 1er message soit "user" et n'accepte que les
+  // rôles user/assistant. On repart donc du premier message utilisateur.
+  const cleaned = messages
+    .filter((m) => m.role === "user" || m.role === "assistant")
+    .map((m) => ({ role: m.role, content: String(m.content ?? "") }));
+  const firstUser = cleaned.findIndex((m) => m.role === "user");
+  const apiMessages = firstUser === -1 ? [] : cleaned.slice(firstUser);
+  if (apiMessages.length === 0) return null;
 
   try {
     const res = await fetch("https://api.anthropic.com/v1/messages", {
@@ -103,11 +112,9 @@ ${contextEntries}`;
       },
       body: JSON.stringify({
         model,
-        max_tokens: 700,
+        max_tokens: 1024,
         system,
-        messages: messages
-          .filter((m) => m.role === "user" || m.role === "assistant")
-          .map((m) => ({ role: m.role, content: String(m.content ?? "") })),
+        messages: apiMessages,
       }),
     });
     if (!res.ok) return null;
