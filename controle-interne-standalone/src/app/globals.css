@@ -5,4 +5,10 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: #06120d;
+}
+
+/* Barre de défilement discrète, ton vert sombre. */
+* {
+  scrollbar-color: #1f3d31 #06120d;
 }

@@ -1,6 +1,5 @@
 // Structure de navigation partagée entre l'en-tête, le pied de page et les
-// cartes de la page d'accueil. Dans ce projet autonome, le cours est servi
-// à la racine du domaine : l'accueil est donc "/".
+// cartes de la page d'accueil. Le cours est servi à la racine du domaine.
 
 export type NavItem = {
   href: string;
@@ -9,7 +8,6 @@ export type NavItem = {
   description: string;
 };
 
-// Conservé pour compatibilité avec les pages : la racine du site.
 export const BASE = "";
 
 export const NAV_ITEMS: NavItem[] = [
@@ -40,6 +38,13 @@ export const NAV_ITEMS: NavItem[] = [
     description: "Le référentiel COSO et ses 17 principes structurants.",
   },
   {
+    href: "/cycles",
+    label: "Les cycles de l'entreprise",
+    short: "Cycles",
+    description:
+      "Ce qu'est un cycle, et le contrôle interne appliqué à chaque cycle.",
+  },
+  {
     href: "/dispositifs",
     label: "Dispositifs & types de contrôles",
     short: "Dispositifs",
@@ -60,6 +65,13 @@ export const NAV_ITEMS: NavItem[] = [
       "Pourquoi un contrôle interne, même bien conçu, n'est jamais absolu.",
   },
   {
+    href: "/ressources",
+    label: "Base de connaissances & sources",
+    short: "Ressources",
+    description:
+      "Bibliographie sourcée (Jacques Renard, COSO, IFACI…) et notions approfondies.",
+  },
+  {
     href: "/glossaire",
     label: "Glossaire",
     short: "Glossaire",
@@ -69,6 +81,26 @@ export const NAV_ITEMS: NavItem[] = [
     href: "/quiz",
     label: "Quiz",
     short: "Quiz",
-    description: "Testez vos connaissances avec 10 questions corrigées.",
+    description: "Testez vos connaissances : les questions changent à chaque partie.",
   },
+  {
+    href: "/assistant",
+    label: "Assistant RICHARD CI",
+    short: "Assistant",
+    description:
+      "Posez vos questions sur le contrôle interne à l'assistant intelligent.",
+  },
+];
+
+// Fil pédagogique (ordre des chapitres), pour la navigation précédent/suivant.
+export const COURSE_FLOW = [
+  "/histoire",
+  "/definition",
+  "/composantes",
+  "/cycles",
+  "/dispositifs",
+  "/acteurs",
+  "/limites",
+  "/ressources",
+  "/glossaire",
 ];

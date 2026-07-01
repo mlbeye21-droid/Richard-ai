@@ -7,7 +7,19 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      // Charte RICHARD : vert vif sur vert très sombre.
+      colors: {
+        brand: {
+          DEFAULT: "#10B981",
+          bright: "#45BB1E",
+          mint: "#34d399",
+          dark: "#0a1a14",
+          black: "#06120d",
+          panel: "#0f2018",
+        },
+      },
+    },
   },
   plugins: [],
 };

@@ -86,15 +86,15 @@ export default function HistoirePage() {
         </Section>
 
         <Section title="Frise chronologique">
-          <ol className="relative space-y-8 border-l-2 border-emerald-200 pl-6">
+          <ol className="relative space-y-8 border-l-2 border-brand/30 pl-6">
             {timeline.map((e) => (
               <li key={e.title} className="relative">
-                <span className="absolute -left-[31px] top-1 grid h-4 w-4 place-items-center rounded-full border-2 border-white bg-emerald-500 shadow" />
-                <span className="text-xs font-bold uppercase tracking-wide text-emerald-600">
+                <span className="absolute -left-[31px] top-1 grid h-4 w-4 place-items-center rounded-full border-2 border-brand-black bg-brand-bright shadow" />
+                <span className="text-xs font-bold uppercase tracking-wide text-brand-mint">
                   {e.date}
                 </span>
-                <h3 className="mt-1 font-bold text-slate-900">{e.title}</h3>
-                <p className="mt-1 text-[0.98rem] leading-relaxed text-slate-600">
+                <h3 className="mt-1 font-bold text-white">{e.title}</h3>
+                <p className="mt-1 text-[0.98rem] leading-relaxed text-slate-300">
                   {e.text}
                 </p>
               </li>
